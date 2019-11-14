@@ -1,0 +1,39 @@
+    /**
+     * Compare the rolled dice to determine who wins
+     * First, order each set based on descending dice value
+     * Next compare the highest of each set, highest number wins, ties go to the defender
+     * Repeat with next highest die
+     * @param attackerDie Attacker's set of dice
+     * @param defenderDie Defender's set of dice
+     * @return An integer array that represents the results of the round, 0 is defender win, 1 is attacker win
+     */
+    public static ArrayList<Integer> compareDie(ArrayList<Die> attackerDie, ArrayList<Die> defenderDie){
+
+        ArrayList<Integer> returnArray = new ArrayList<>();
+        /**
+         * Implementation of Comparator
+         */
+        class dieCompare implements Comparator<Die>{
+            @Override
+            public int compare(Die o1, Die o2) {
+                return (o2.getValue() - o1.getValue());
+            }
+        }
+        /*Sort the lists*/
+        Collections.sort(attackerDie,new dieCompare());
+        Collections.sort(defenderDie,new dieCompare());
+
+        /*Compare values*/
+        for (int i = 0; i < defenderDie.size(); i++) {
+            if (defenderDie.get(i).getValue() >= attackerDie.get(i).getValue()){
+                /*Defender win*/
+                returnArray.add(0);
+            }else{
+                /*Attacker wins*/
+                returnArray.add(1);
+            }
+        }
+
+        /*Return results*/
+        return returnArray;
+    }
